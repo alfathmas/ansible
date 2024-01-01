@@ -1,2 +1,12 @@
 ---
 # handlers file for update-prometheus
+- name: Reload systemd
+  systemd:
+    name: systemd
+    state: reloaded
+
+- name: Start Prometheus service
+  systemd:
+    name: prometheus
+    enabled: yes
+    state: started

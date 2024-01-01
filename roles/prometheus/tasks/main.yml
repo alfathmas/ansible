@@ -51,9 +51,12 @@
     owner: prometheus
     group: prometheus
     mode: 0644
+    remote_src: yes
 
-- name: Start Prometheus service
-  systemd:
-    name: prometheus
-    enabled: yes
-    state: started
+- name: Create Prometheus service unit file
+  template:
+    src: prometheus.service.j2
+    dest: /etc/systemd/system/prometheus.service
+  notify:
+    - Reload systemd
+    - Start Prometheus service
