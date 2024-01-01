@@ -1,0 +1,120 @@
+# my global config
+global:
+  scrape_interval: 15s # Set the scrape interval to every 15 seconds. Default is every 1 minute.
+  evaluation_interval: 15s # Evaluate rules every 15 seconds. The default is every 1 minute.
+  # scrape_timeout is set to the global default (10s).
+
+# Alertmanager configuration
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+          # - alertmanager:9093
+
+# Load rules once and periodically evaluate them according to the global 'evaluation_interval'.
+rule_files:
+  # - "first_rules.yml"
+  # - "second_rules.yml"
+
+# A scrape configuration containing exactly one endpoint to scrape:
+# Here it's Prometheus itself.
+scrape_configs:
+  # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
+  - job_name: "prometheus"
+
+    # metrics_path defaults to '/metrics'
+    # scheme defaults to 'http'.
+
+    static_configs:
+      - targets: ["localhost:9090"]
+
+  # MCD WEB LIVE
+  - job_name: 'mcd-live-web'
+    static_configs:
+      - targets: ['172.31.25.226:9100']
+  - job_name: 'mcd-live-web-2'
+    static_configs:
+      - targets: ['172.31.11.133:9100']
+  - job_name: 'mcd-live-web-3'
+    static_configs:
+      - targets: ['172.31.7.22:9100']
+  - job_name: 'mcd-live-MYSQL'
+    static_configs:
+      - targets: ['172.31.20.56:9100']
+  # MCD BTS
+  - job_name: 'bts'
+    static_configs:
+      - targets: ['172.31.32.6:9100']
+  - job_name: 'mongo-bts'
+    static_configs:
+      - targets: ['172.31.35.117:9100']
+  - job_name: 'mongo-gami'
+    static_configs:
+      - targets: ['172.31.44.231:9100']
+  # MCD MGM
+  - job_name: 'mgm-indo-fe'
+    static_configs:
+      - targets: ['172.31.12.175:9100']
+  - job_name: 'mgm-indo-api'
+    static_configs:
+      - targets: ['172.31.15.253:9100']
+  - job_name: 'mgm-indo-cms'
+    static_configs:
+      - targets: ['172.31.5.21:9100']
+  - job_name: 'mgm-indo-mysql'
+    static_configs:
+      - targets: ['172.31.0.243:9100']
+  # MCD POKEMON AR
+  - job_name: 'pokemon-ar-cms'
+    static_configs:
+      - targets: ['172.31.38.44:9100']
+  - job_name: 'pokemon-ar-fe'
+    static_configs:
+      - targets: ['172.31.4.85:9100']
+  # MCD POGO CHECKIN
+  - job_name: 'pogo-checkin-api'
+    static_configs:
+      - targets: ['172.31.41.96:9100']
+  - job_name: 'pogo-checkin-cms'
+    static_configs:
+      - targets: ['172.31.32.163:9100']
+  - job_name: 'pogo-checkin-fe'
+    static_configs:
+      - targets: ['172.31.2.40:9100']
+  - job_name: 'pogo-checkin-mysql'
+    static_configs:
+      - targets: ['172.31.33.141:9100']
+  # MCD POKEMON LIVE
+  - job_name: 'pokemon-live'
+    static_configs:
+      - targets: ['172.31.46.60:9100']
+  - job_name: 'pokemon-mysql'
+    static_configs:
+      - targets: ['172.31.40.9:9100']
+  # MCD MCKIDS
+  - job_name: 'mckids-api'
+    static_configs:
+      - targets: ['172.31.11.191:9100']
+  - job_name: 'mckids-cms'
+    static_configs:
+      - targets: ['172.31.35.33:9100']
+  - job_name: 'mckids-backdoor'
+    static_configs:
+      - targets: ['172.31.2.3:9100']
+  - job_name: 'mckids-fe'
+    static_configs:
+      - targets: ['172.31.7.91:9100']
+  - job_name: 'mckids-mysql'
+    static_configs:
+      - targets: ['172.31.2.80:9100']
+  # Rayakan Harapan
+  - job_name: 'rayakan-harapan'
+    static_configs:
+      - targets: ['172.31.7.176:9100']
+  - job_name: 'rayakan-harapan-db'
+    static_configs:
+      - targets: ['172.31.20.231:9100']
+  # MCD Campaign Contabo
+  - job_name: 'mcd-contabo'
+    static_configs:
+      - targets: ['194.233.80.13:9100']

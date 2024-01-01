@@ -1,0 +1,59 @@
+---
+# tasks file for update-prometheus
+- name: Create Prometheus group
+  group:
+    name: prometheus
+    system: yes
+
+- name: Create Prometheus user and group
+  user:
+    name: prometheus
+    group: prometheus
+    system: yes
+    shell: /bin/false
+
+- name: Create Prometheus configuration directory
+  file:
+    path: /etc/prometheus
+    state: directory
+    owner: prometheus
+    group: prometheus
+    mode: 0755
+
+- name: Download and extract Prometheus
+  get_url:
+    url: "https://github.com/prometheus/prometheus/releases/download/v2.48.1/prometheus-2.48.1.linux-amd64.tar.gz"
+    dest: /tmp/prometheus.tar.gz
+
+- name: Extract Prometheus archive
+  ansible.builtin.unarchive:
+    src: /tmp/prometheus.tar.gz
+    dest: /opt
+    remote_src: yes
+
+- name: Move Prometheus files to installation directory
+  command: "mv /opt/prometheus-2.48.1.linux-amd64 /opt/prometheus"
+  args:
+    chdir: /opt
+
+- name: Create Prometheus data directory
+  file:
+    path: /var/lib/prometheus
+    state: directory
+    owner: prometheus
+    group: prometheus
+    mode: 0755
+
+- name: Copy Prometheus configuration file
+  copy:
+    src: /opt/prometheus/prometheus.yml
+    dest: /etc/prometheus/prometheus.yml
+    owner: prometheus
+    group: prometheus
+    mode: 0644
+
+- name: Start Prometheus service
+  systemd:
+    name: prometheus
+    enabled: yes
+    state: started
